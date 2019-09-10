@@ -21,7 +21,7 @@ exports.insert = async (req, res) => {
              timestamp: new Date(),
     },
              ['Name']: {
-             value: emp_Details[index].name,
+             value: emp_Details[index].Name,
              timestamp: new Date(),
           },
         },
