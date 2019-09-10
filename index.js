@@ -13,7 +13,7 @@ exports.insert = async (req, res) => {
     const table = instance.table('emp_Details');
     const timestamp = new Date();
     const insertRows = table.map((id, index) => ({
-      key: ''    
+      key: 'table${index}',
       data: {
          employee: {
              ['Id']: {
