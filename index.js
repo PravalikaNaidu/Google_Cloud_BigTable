@@ -30,9 +30,8 @@ exports.insert = async (req, res) => {
     await table.insert(insertRows);
     console.log(`Successfully wrote row ${insertRows.key} Rows successfully inserted`);
   }
-catch (err) {
-    console.error(new Error(err.message)); 
-    res.status(500).send(err.message);
+catch (e) {
+    console.log(e);
   }
 }
 
@@ -54,8 +53,8 @@ exports.read = async (req, res) => {
     const [singleRow] = await table.row('id[0]').get({filter});
     const rowdata = JSON.stringify(singleRow.data,null,4);
     console.log(`\tRead: ${getRow(singleRow)}`);
-  } catch (error) {
-    console.error('Table cannot be read: ', error);
+  } catch (e) {
+    console.log('Table cannot be read: ');
   }
 }
 
@@ -67,8 +66,8 @@ exports.delete = async (req, res) => {
     const timestamp = new Date();
     console.log('Delete the entire table');
     await table.delete();
-  } catch (error) {
-    console.error('Table cannot be deleted: ', error);
+  } catch (e) {
+    console.log('Table cannot be deleted: ');
   }
 }
     
