@@ -11,8 +11,6 @@ exports.insert = async (req, res) => {
     const instanceId = 'bigtable-instance';
     const instance = bigtable.instance(instanceId);
     const table = instance.table('emp_Details');
-    
-
     const timestamp = new Date();
     const rowsToInsert = table.map((id, index) => ({
       key: ''    
@@ -22,9 +20,9 @@ exports.insert = async (req, res) => {
              value: emp_Details[index].Id,
              timestamp: new Date(),
     },
-      ['Name']: {
-          value: emp_Details[index].name,
-           timestamp: new Date(),
+             ['Name']: {
+             value: emp_Details[index].name,
+             timestamp: new Date(),
           },
         },
       },
@@ -58,10 +56,24 @@ exports.read = async (req, res) => {
     const [singleRow] = await table.row('id[0]').get({filter});
     const rowdata = JSON.stringify(singleRow.data,null,4);
     console.log(`\tRead: ${getRow(singleRow)}`);
-    console.log('Delete the table');
-    await table.delete();
-   
   } catch (error) {
-    console.error('Something went wrong:', error);
+    console.error('Table cannot be read: ', error);
   }
 }
+
+exports.delete = async (req, res) => {
+  try {
+    const instanceId = 'bigtable-instance';
+    const instance = bigtable.instance(instanceId);
+    const table = instance.table('emp_Details');
+    const timestamp = new Date();
+    console.log('Delete the entire table');
+    await table.delete();
+  } catch (error) {
+    console.error('Table cannot be deleted: ', error);
+  }
+}
+    
+    
+    
+
