@@ -27,8 +27,8 @@ exports.insert = async (req, res) => {
         },
       },
     };
-    await table.insert(rowToInsert);
-    console.log(`Successfully wrote row ${rowToInsert.key} Rows successfully inserted`);
+    await table.insert(insertRows);
+    console.log(`Successfully wrote row ${insertRows.key} Rows successfully inserted`);
   }
 catch (err) {
     console.error(new Error(err.message)); 
