@@ -42,13 +42,11 @@ exports.read = async (req, res) => {
     const instance = bigtable.instance(instanceId);
     const table = instance.table('emp_Details');
     const timestamp = new Date();
-    const filter = [
-            {
-              column: {
-                cellLimit: 1, 
-              },
-            },
-          ];
+    const filter = [{
+      family: COLUMN_FAMILY_ID,
+    }, {
+      column: COLUMN_QUALIFIER
+    }];
     const getRow = row => {
        return row.data[COLUMN_FAMILY_ID][0].value;
       };
