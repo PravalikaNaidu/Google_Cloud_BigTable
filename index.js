@@ -4,8 +4,9 @@ const bigtable = Bigtable();
 const instId = 'bigtable-instance';
 const instance = bigtable.instance(instanceId);
 const table = instance.table('emp_Details');
-
-exports.set = async (req, res) => {
+const COLUMN_FAMILY_ID = 'employee';
+const COLUMN_QUALIFIER = 'Id';
+exports.insert = async (req, res) => {
   try {
     const instanceId = 'bigtable-instance';
     const instance = bigtable.instance(instanceId);
@@ -36,14 +37,27 @@ catch (err) {
     res.status(500).send(err.message);
   }
 }
-    console.log('Reading a single row ');
-    const [singleRow] = await table.row('id[0]').get();
-    const rowdata = JSON.stringify(singleRow.data,null,4);
-    console.log("Row key :${singlerow.id}\nData "${rowData}');
-    //console.log(`\tRead: ${getRow(singleRow)}`);
-    
-    
 
+exports.read = async (req, res) => {
+  try {
+    const instanceId = 'bigtable-instance';
+    const instance = bigtable.instance(instanceId);
+    const table = instance.table('emp_Details');
+    const timestamp = new Date();
+    const filter = [
+            {
+              column: {
+                cellLimit: 1, 
+              },
+            },
+          ];
+    const getRow = row => {
+       return row.data[COLUMN_FAMILY_ID][0].value;
+      };
+    console.log('Reading a single row ');
+    const [singleRow] = await table.row('id[0]').get({filter});
+    const rowdata = JSON.stringify(singleRow.data,null,4);
+    console.log(`\tRead: ${getRow(singleRow)}`);
     console.log('Delete the table');
     await table.delete();
    
