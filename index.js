@@ -12,7 +12,7 @@ exports.insert = async (req, res) => {
     const instance = bigtable.instance(instanceId);
     const table = instance.table('emp_Details');
     const timestamp = new Date();
-    const rowsToInsert = table.map((id, index) => ({
+    const insertRows = table.map((id, index) => ({
       key: ''    
       data: {
          employee: {
