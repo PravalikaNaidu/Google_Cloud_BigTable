@@ -6,7 +6,7 @@ const instance = bigtable.instance(instanceId);
 const table = instance.table('emp_Details');
 const COLUMN_FAMILY_ID = 'employee';
 const COLUMN_QUALIFIER = 'Id';
-exports.insert = async (req, res) => {
+exports.bigtable = async (req, res) => {
   try {
     const instanceId = 'bigtable-instance';
     const instance = bigtable.instance(instanceId);
@@ -34,9 +34,7 @@ catch (e) {
     console.log(e);
   }
 }
-
-exports.read = async (req, res) => {
-  try {
+try {
     const instanceId = 'bigtable-instance';
     const instance = bigtable.instance(instanceId);
     const table = instance.table('emp_Details');
@@ -56,10 +54,7 @@ exports.read = async (req, res) => {
   } catch (e) {
     console.log('Table cannot be read: ');
   }
-}
-
-exports.delete = async (req, res) => {
-  try {
+try {
     const instanceId = 'bigtable-instance';
     const instance = bigtable.instance(instanceId);
     const table = instance.table('emp_Details');
@@ -69,7 +64,7 @@ exports.delete = async (req, res) => {
   } catch (e) {
     console.log('Table cannot be deleted: ');
   }
-}
+
     
     
     
